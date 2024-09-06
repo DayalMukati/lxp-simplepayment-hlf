@@ -1,1 +1,1 @@
-# lxp-simplepayment-hlf
+# lxp-milstone-hlf
