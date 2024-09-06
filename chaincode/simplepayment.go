@@ -16,59 +16,16 @@ type Payer struct {
 }
 
 func (p *PaymentContract) SetPaymentLimit(ctx contractapi.TransactionContextInterface, payerID string, limit float64) error {
-	payer := Payer{
-		PayerID: payerID,
-		Limit:   limit,
-	}
-
-	payerAsBytes, err := json.Marshal(payer)
-	if err != nil {
-		return fmt.Errorf("failed to marshal payer: %s", err.Error())
-	}
-
-	return ctx.GetStub().PutState(payerID, payerAsBytes)
+	// Write logic to Set a maximum payment limit for a payer.
 }
 
 func (p *PaymentContract) AuthorizePayment(ctx contractapi.TransactionContextInterface, payerID string, paymentAmount float64) (bool, error) {
-	payerAsBytes, err := ctx.GetStub().GetState(payerID)
-	if err != nil {
-		return false, fmt.Errorf("failed to get payer: %s", err.Error())
-	}
+	// Write logic to Authorize a payment for a payer, ensuring that it does not exceed the payment limit.
 
-	if payerAsBytes == nil {
-		return false, fmt.Errorf("payer %s does not exist", payerID)
-	}
-
-	payer := new(Payer)
-	err = json.Unmarshal(payerAsBytes, payer)
-	if err != nil {
-		return false, fmt.Errorf("failed to unmarshal payer: %s", err.Error())
-	}
-
-	if paymentAmount > payer.Limit {
-		return false, fmt.Errorf("payment amount exceeds limit for payer %s", payerID)
-	}
-
-	return true, nil
 }
 
 func (p *PaymentContract) QueryPaymentLimit(ctx contractapi.TransactionContextInterface, payerID string) (float64, error) {
-	payerAsBytes, err := ctx.GetStub().GetState(payerID)
-	if err != nil {
-		return 0, fmt.Errorf("failed to get payer: %s", err.Error())
-	}
-
-	if payerAsBytes == nil {
-		return 0, fmt.Errorf("payer %s does not exist", payerID)
-	}
-
-	payer := new(Payer)
-	err = json.Unmarshal(payerAsBytes, payer)
-	if err != nil {
-		return 0, fmt.Errorf("failed to unmarshal payer: %s", err.Error())
-	}
-
-	return payer.Limit, nil
+	// Write logic to Query the payment limit for a payer.
 }
 
 func main() {
