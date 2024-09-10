@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
@@ -13,19 +14,30 @@ type PaymentContract struct {
 type Payer struct {
 	PayerID string  `json:"payerID"`
 	Limit   float64 `json:"limit"`
+	Status  string  `json:"status"` // Only keeps track of the last status (PaymentAuthorized, PaymentFailed)
 }
 
+// SetPaymentLimit sets the payment limit for a payer
 func (p *PaymentContract) SetPaymentLimit(ctx contractapi.TransactionContextInterface, payerID string, limit float64) error {
-	// Write logic to Set a maximum payment limit for a payer.
+	// Write the logic to set the payment limit for a payer
 }
 
-func (p *PaymentContract) AuthorizePayment(ctx contractapi.TransactionContextInterface, payerID string, paymentAmount float64) (bool, error) {
-	// Write logic to Authorize a payment for a payer, ensuring that it does not exceed the payment limit.
+// AuthorizePayment authorizes a payment for a payer if it doesn't exceed the limit
+func (p *PaymentContract) AuthorizePayment(ctx contractapi.TransactionContextInterface, payerID string, paymentAmount float64) error {
+	// write the logic to authorize a payment for a payer if it doesn't exceed the limit
 
+	// Check if payment exceeds the limit, if so, set status to PaymentFailed
+	
+
+	// If payment is within the limit, set status to authorized
+	
 }
 
-func (p *PaymentContract) QueryPaymentLimit(ctx contractapi.TransactionContextInterface, payerID string) (float64, error) {
-	// Write logic to Query the payment limit for a payer.
+// QueryPaymentStatus returns the last status of the payer
+func (p *PaymentContract) QueryPaymentStatus(ctx contractapi.TransactionContextInterface, payerID string) (string, error) {
+	// Get the status from the world state
+	// Return the current status of the payer
+	return payer.Status, nil
 }
 
 func main() {
